@@ -1,0 +1,25 @@
+{
+  "name": "wplens-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "wplens - a fast WordPress stack profiler for freelancers and agencies",
+  "type": "module",
+  "workspaces": [
+    "packages/core",
+    "packages/cli",
+    "packages/extension"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "dev": "npm run dev --workspace packages/cli",
+    "clean": "npm run clean --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "allowScripts": {
+    "esbuild@0.24.2": true,
+    "sharp@0.35.4": true
+  }
+}

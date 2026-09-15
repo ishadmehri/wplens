@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "wplens — WordPress stack profiler",
+  "version": "0.1.0",
+  "description": "See what a WordPress site is built with — core, theme, plugins, host — in one click.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "wplens",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["activeTab", "tabs", "storage"],
+  "host_permissions": ["*://*/*"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "wplens@wplens.dev",
+      "strict_min_version": "121.0"
+    }
+  }
+}

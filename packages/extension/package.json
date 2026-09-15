@@ -1,0 +1,19 @@
+{
+  "name": "@wplens/extension",
+  "version": "0.1.0",
+  "private": true,
+  "description": "wplens browser extension (Chrome + Firefox, MV3) built on @wplens/core",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@wplens/core": "*"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "sharp": "^0.35.4"
+  },
+  "license": "MIT"
+}
