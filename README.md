@@ -153,6 +153,30 @@ The first open of a tab scans it once and caches the result (in
 that cached result instantly instead of re-scanning — click **Rescan** to
 refresh.
 
+## wplens vs WPScan
+
+Both look at WordPress sites, but they answer different questions. **WPScan** is
+a security scanner: "does this site have known vulnerabilities?" **wplens** is a
+stack profiler: "what is this site built with?" — a fast, quiet inventory you can
+run before quoting support or maintenance. They complement each other.
+
+| | **wplens** | **WPScan** |
+|---|---|---|
+| Purpose | Stack profiling / inventory | Security & vulnerability scanning |
+| CVE / vuln database | ✗ (on the roadmap) | ✓ WPVulnDB — its core strength |
+| Plugin discovery | Passive: homepage + REST + generator/comments | Aggressive: brute-forces thousands of wordlist paths |
+| Speed / footprint | Fast, polite, looks like a normal visit | Slow, noisy, trips WAFs |
+| Third-party services (GTM, GA, pixels) | ✓ with IDs | ✗ |
+| Managed-host detection (Kinsta, WP Engine…) | ✓ | ✗ |
+| Browser extension | ✓ Chrome + Firefox, one click | ✗ CLI + API only |
+| Password brute-force | ✗ (by design) | ✓ |
+| User enumeration | Optional, no brute-force | ✓ |
+| Install | `npm` / load-unpacked | Ruby gem |
+| Cost | Fully free / MIT | CLI free; API 25 req/day on the free tier |
+
+Use **WPScan** for a security assessment; use **wplens** for a quick, broad
+picture of the stack across the CLI and the browser.
+
 ## Roadmap
 
 - [x] Browser extension (Chrome + Firefox, MV3) on top of `@wplens/core`
