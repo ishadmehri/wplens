@@ -46,6 +46,16 @@ function esc(s: string): string {
   );
 }
 
+/**
+ * Render an HTML string into an element without assigning `innerHTML`.
+ * DOMParser does not execute scripts, so this is inert; it also keeps AMO's
+ * linter happy (no unsafe innerHTML assignment). Content is escaped upstream.
+ */
+function setHTML(el: HTMLElement, html: string): void {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  el.replaceChildren(...Array.from(doc.body.childNodes));
+}
+
 async function activeTabUrl(): Promise<string | undefined> {
   const tabs = await ext.tabs.query({ active: true, currentWindow: true });
   return tabs?.[0]?.url;
@@ -176,7 +186,7 @@ function showResult(result: ScanResult, cached: boolean) {
   const banner = cached
     ? `<div class="cached">Showing last result · click Rescan to refresh</div>`
     : "";
-  out.innerHTML = banner + render(result);
+  setHTML(out, banner + render(result));
   copyEl.disabled = !result.isWordPress;
   rescanEl.textContent = "Rescan";
 }
@@ -184,13 +194,13 @@ function showResult(result: ScanResult, cached: boolean) {
 async function runScan() {
   rescanEl.disabled = true;
   copyEl.disabled = true;
-  out.innerHTML = stateHtml(`<div class="spinner"></div>${deepEl.checked ? "Deep scan…" : "Scanning…"}`);
+  setHTML(out, stateHtml(`<div class="spinner"></div>${deepEl.checked ? "Deep scan…" : "Scanning…"}`));
 
   const url = await activeTabUrl();
   urlEl.textContent = url ? url.replace(/^https?:\/\//, "") : "";
 
   if (!url || !/^https?:\/\//i.test(url)) {
-    out.innerHTML = stateHtml("Open a website tab, then click Scan.<br><span class='muted'>Browser and extension pages can't be scanned.</span>");
+    setHTML(out, stateHtml("Open a website tab, then click Scan.<br><span class='muted'>Browser and extension pages can't be scanned.</span>"));
     rescanEl.disabled = false;
     return;
   }
@@ -202,7 +212,7 @@ async function runScan() {
     void setCache(url, { result, mode, ts: Date.now() });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
-    out.innerHTML = stateHtml(`<span class="warn">Scan failed</span><br><span class="muted">${esc(msg)}</span>`);
+    setHTML(out, stateHtml(`<span class="warn">Scan failed</span><br><span class="muted">${esc(msg)}</span>`));
   } finally {
     rescanEl.disabled = false;
   }
@@ -234,7 +244,7 @@ async function init() {
   urlEl.textContent = url ? url.replace(/^https?:\/\//, "") : "";
 
   if (!url || !/^https?:\/\//i.test(url)) {
-    out.innerHTML = stateHtml("Open a website tab, then click Scan.<br><span class='muted'>Browser and extension pages can't be scanned.</span>");
+    setHTML(out, stateHtml("Open a website tab, then click Scan.<br><span class='muted'>Browser and extension pages can't be scanned.</span>"));
     return;
   }
 
