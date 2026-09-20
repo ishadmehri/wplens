@@ -43,6 +43,9 @@ third-party services — in one click.
 
 **Category:** Developer Tools
 
+**Homepage / Support / Source URL** (all three fields → the repo):
+https://github.com/ishadmehri/wplens
+
 **Detailed description:**
 
 > wplens is a fast WordPress stack profiler for freelancers, agencies and
